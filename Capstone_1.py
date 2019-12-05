@@ -156,3 +156,25 @@ jobs_total['A_MEAN'] = jobs_total['A_MEAN'].apply(pd.to_numeric,errors='coerce')
 sns.boxplot(jobs_total['A_MEAN'])
 
 #ax = jobs_total.plot.bar(x = 'A_MEAN',rot=0)
+
+# importing populations of key MSAs 
+pop = pd.read_excel(r'C:\Users\Bryan\Documents\Capstone Job Data\pop-est2018-alldata.xlsx')
+pop_msa = pop[pop['LSAD']=='Metropolitan Statistical Area']
+MSA = ['Nashville-Davidson--Murfreesboro--Franklin, TN','Phoenix-Mesa-Scottsdale, AZ','Austin-Round Rock, TX','Indianapolis-Carmel-Anderson, IN','Philadelphia-Camden-Wilmington, PA-NJ-DE-MD','New York-Newark-Jersey City, NY-NJ-PA','Los Angeles-Long Beach-Anaheim, CA','Chicago-Naperville-Elgin, IL-IN-WI','Dallas-Fort Worth-Arlington, TX','Philadelphia-Camden-Wilmington', 'PA-NJ-DE-MD','Houston-The Woodlands-Sugar Land, TX','Washington-Arlington-Alexandria, DC-VA-MD-WV','Atlanta-Sandy Springs-Roswell, GA','Boston-Cambridge-Newton, MA-NH','San Francisco-Oakland-Hayward, CA','Detroit-Warren-Dearborn, MI','Seattle-Tacoma-Bellevue, WA','Baltimore-Columbia-Towson, MD','Denver-Aurora-Lakewood, CO','Portland-Vancouver-Hillsboro, OR-WA','Charlotte-Concord-Gastonia, NC-SC'] 
+pop_20 = pop_msa[pop_msa['NAME'].isin(MSA)]
+
+#converting to excel for tableau and visual analysis 
+#pop_20.to_excel("pop_20.xlsx")
+house_price = pd.read_excel(r'C:\Users\Bryan\Documents\Capstone Job Data\House_Pricing.xls')
+
+# plotting pop/housing prices
+plt.plot( 'CENSUS2010POP', data=pop_20, marker='o', markerfacecolor='blue', markersize=12, color='skyblue', linewidth=4)
+plt.plot( 'POPESTIMATE2012', data=pop_20, marker='', color='olive', linewidth=2)
+plt.plot( 'POPESTIMATE2018', data=pop_20, marker='', color='olive', linewidth=2, linestyle='dashed', label="2018")
+plt.legend()
+
+plt.plot('CENSUS2010POP','POPESTIMATE2018',data=pop_20)
+
+plt.scatter('CENSUS2010POP',data=pop_20)
+
+# 
